@@ -62,7 +62,7 @@ const App = () => {
           }, 
           data: { code: authorizationCode}
         });
-        const { data } = response; 
+        const { data } = response;
         setAuthState(data);
         console.log('auth set:', authState);
       } catch(error) {
