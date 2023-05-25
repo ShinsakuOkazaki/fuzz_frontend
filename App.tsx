@@ -7,26 +7,27 @@
 
 import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { View, Text} from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { authorize } from "react-native-app-auth";
 import axios from 'axios';
-
+import HomeScreen from "./screen/HomeScreen";
+import UserCreateScreen from "./screen/UserCreateScreen";
 
 const Stack = createNativeStackNavigator();
 
 const linking = {
-  prefixes: ['fuzz://', 'fuzz.auth://home'], 
+  prefixes: ['fuzz://'], 
   config: {
     screens: {
       Home: 'home', 
+      UserCreate: 'user'
     }, 
   }, 
 };
 
 const config = {
   clientId: 'cf3e21549b5d4e6696efc0e2382f8fb6', // available on the app page
-  redirectUrl: 'fuzz.auth://home', // the redirect you defined after creating the app
+  redirectUrl: 'fuzz://home', // the redirect you defined after creating the app
   scopes: ['user-read-email', 'playlist-modify-public', 'user-read-private'], // the scopes you need to access
   serviceConfiguration: {
     authorizationEndpoint: 'https://accounts.spotify.com/authorize',
@@ -37,13 +38,7 @@ const config = {
   usePKCE: false,
 };
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
-  )
-}
+
 
 const App = () => {
   const [authState, setAuthState] = useState({})
@@ -96,6 +91,7 @@ const App = () => {
     <NavigationContainer linking={linking}>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="UserCreate" component={UserCreateScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )
