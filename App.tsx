@@ -27,7 +27,7 @@ const linking = {
 
 const config = {
   clientId: 'cf3e21549b5d4e6696efc0e2382f8fb6', // available on the app page
-  redirectUrl: 'fuzz://home', // the redirect you defined after creating the app
+  redirectUrl: 'fuzz://user', // the redirect you defined after creating the app
   scopes: ['user-read-email', 'playlist-modify-public', 'user-read-private'], // the scopes you need to access
   serviceConfiguration: {
     authorizationEndpoint: 'https://accounts.spotify.com/authorize',
