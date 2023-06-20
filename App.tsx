@@ -13,6 +13,10 @@ import axios from 'axios';
 import HomeScreen from "./screen/HomeScreen";
 import UserCreateScreen from "./screen/UserCreateScreen";
 
+import store from './store/store'
+import { Provider } from "react-redux";
+
+
 const Stack = createNativeStackNavigator();
 
 const linking = {
@@ -58,6 +62,11 @@ const App = () => {
           data: { code: authorizationCode}
         });
         const { data } = response;
+
+        // 
+        // Store response in Redux-secure
+        //
+
         setAuthState(data);
         console.log('auth set:', authState);
       } catch(error) {
@@ -88,12 +97,15 @@ const App = () => {
   },[]);
   
   return (
-    <NavigationContainer linking={linking}>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="UserCreate" component={UserCreateScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store = {store}>
+      <NavigationContainer linking={linking}>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="UserCreate" component={UserCreateScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+    
   )
 }
  
