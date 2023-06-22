@@ -12,9 +12,11 @@ import { authorize } from "react-native-app-auth";
 import axios from 'axios';
 import HomeScreen from "./screen/HomeScreen";
 import UserCreateScreen from "./screen/UserCreateScreen";
-
-import store from './store/store'
+import {store, persistor} from './store/store'
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+
+import { addData } from "./features/user/userSlice";
 
 
 const Stack = createNativeStackNavigator();
@@ -67,7 +69,9 @@ const App = () => {
         // Store response in Redux-secure
         //
 
-        setAuthState(data);
+        //setAuthState(data);
+
+        addData(data)
         console.log('auth set:', authState);
       } catch(error) {
         console.log(error);
@@ -98,14 +102,15 @@ const App = () => {
   
   return (
     <Provider store = {store}>
-      <NavigationContainer linking={linking}>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="UserCreate" component={UserCreateScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
-    
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer linking={linking}>
+          <Stack.Navigator>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="UserCreate" component={UserCreateScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
+    </Provider>  
   )
 }
  
